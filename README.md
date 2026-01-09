@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GHOST-FRAMEWORK Banner](https://img.shields.io/badge/GHOST--FRAMEWORK-v1.0.0-cyan?style=for-the-badge&logo=ghost)
+![GHOST-FRAMEWORK Banner](https://img.shields.io/badge/GHOST--FRAMEWORK-v1.1.0-cyan?style=for-the-badge&logo=ghost)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Bash](https://img.shields.io/badge/Bash-4.0%2B-green.svg?style=flat-square&logo=gnu-bash)](https://www.gnu.org/software/bash/)
@@ -41,15 +41,24 @@ GHOST-FRAMEWORK is an **open-source bug bounty automation framework** designed f
 
 | Feature | Description |
 |---------|-------------|
-| **Subdomain Enumeration** | Multi-source subdomain discovery with Subfinder |
+| **Subdomain Enumeration** | Multi-source subdomain discovery with Subfinder + Amass |
 | **DNS Resolution** | Fast DNS resolution with dnsx to filter live hosts |
 | **WAF Detection** | Automatic detection of Cloudflare, Akamai, Incapsula, and more |
 | **Adaptive Scanning** | Reduce threads and rate limits when WAF is detected |
+| **🆕 Subdomain Takeover** | Detect vulnerable subdomains (40+ service fingerprints) |
+| **🆕 Port Scanning** | Fast port scanning with naabu + service detection |
 | **URL Crawling** | Historical (GAU) and live (Katana) URL discovery |
 | **Parameter Mining** | Extract and classify parameters using GF patterns |
+| **🆕 Secrets Extraction** | Extract API keys and tokens from JavaScript (40+ patterns) |
+| **🆕 Directory Fuzzing** | Fast directory brute-forcing with ffuf |
+| **🆕 Screenshots** | Visual reconnaissance with gowitness/aquatone |
 | **Nuclei Scanning** | Template-based vulnerability scanning |
 | **XSS Detection** | Dalfox integration for reflected XSS |
 | **SQLi Detection** | SQL injection pattern detection |
+| **🆕 SSRF Detection** | Server-Side Request Forgery checks |
+| **🆕 CORS Check** | CORS misconfiguration detection |
+| **🆕 Open Redirect** | Open redirect vulnerability detection |
+| **🆕 CRLF Injection** | Header injection detection |
 | **Report Generation** | Markdown + HTML reports with findings summary |
 | **Notifications** | Discord, Slack, Telegram webhooks |
 
@@ -169,10 +178,15 @@ ghost-framework/
 ├── config/
 │   └── ghost.conf        # ⚙️ Configuration (API keys, threads, wordlists)
 ├── modules/
-│   ├── installer.sh      # 📦 Dependency installer
+│   ├── installer.sh      # 📦 Dependency installer (18+ tools)
 │   ├── recon.sh          # 🔍 Reconnaissance (subdomains, WAF detection)
+│   ├── takeover.sh       # 🎯 Subdomain takeover detection
+│   ├── portscan.sh       # 🔌 Port scanning with naabu
 │   ├── crawling.sh       # 🕷️ URL crawling and parameter mining
-│   └── vulnerability.sh  # 🎯 Vulnerability scanning
+│   ├── secrets.sh        # 🔐 JavaScript secrets extraction
+│   ├── fuzzing.sh        # 🔍 Directory fuzzing with ffuf
+│   ├── screenshots.sh    # 📸 Visual reconnaissance
+│   └── vulnerability.sh  # 🎯 Vulnerability scanning (10+ checks)
 ├── utils/
 │   ├── banner.sh         # 🎨 ASCII art and colors
 │   ├── logger.sh         # 📝 Logging functions
@@ -308,10 +322,14 @@ git push origin feature/my-awesome-feature
 
 ## 🗺️ Roadmap
 
-- [ ] **v1.1** - Subdomain takeover detection
-- [ ] **v1.2** - JavaScript secrets extraction
-- [ ] **v1.3** - Burp Suite integration
-- [ ] **v1.4** - Custom Nuclei template builder
+- [x] **v1.1** - ✅ Subdomain takeover detection
+- [x] **v1.1** - ✅ JavaScript secrets extraction
+- [x] **v1.1** - ✅ Port scanning with naabu
+- [x] **v1.1** - ✅ Directory fuzzing with ffuf
+- [x] **v1.1** - ✅ Screenshot capture
+- [x] **v1.1** - ✅ SSRF, CORS, Open Redirect, CRLF detection
+- [ ] **v1.2** - Burp Suite integration
+- [ ] **v1.3** - Custom Nuclei template builder
 - [ ] **v2.0** - Web UI dashboard
 
 ---

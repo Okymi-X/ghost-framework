@@ -1,0 +1,189 @@
+#!/bin/bash
+# ==============================================================================
+# GHOST-FRAMEWORK - Configuration File (Example)
+# ==============================================================================
+# File: config/ghost.conf.example
+# Description: Example configuration - Copy to ghost.conf and customize
+# Version: 1.1.0
+# 
+# Copy this file to ghost.conf and update with your settings:
+#   cp ghost.conf.example ghost.conf
+# ==============================================================================
+
+# ==============================================================================
+# GENERAL SETTINGS
+# ==============================================================================
+
+# Enable debug mode (true/false)
+DEBUG="false"
+
+# Verbose output (true/false)
+VERBOSE="false"
+
+# Results directory (relative to script or absolute path)
+RESULTS_DIR="./results"
+
+# Keep temporary files after scan
+KEEP_TEMP_FILES="false"
+
+# ==============================================================================
+# SCAN MODE SETTINGS
+# ==============================================================================
+
+# Stealth mode settings (slow, quiet)
+STEALTH_THREADS="2"
+STEALTH_RATE_LIMIT="10"
+STEALTH_DELAY="2"
+STEALTH_TIMEOUT="30"
+
+# Aggressive mode settings (fast, noisy)
+AGGRESSIVE_THREADS="50"
+AGGRESSIVE_RATE_LIMIT="150"
+AGGRESSIVE_DELAY="0"
+AGGRESSIVE_TIMEOUT="10"
+
+# ==============================================================================
+# WAF DETECTION & ADAPTATION
+# ==============================================================================
+
+# Enable WAF detection
+WAF_DETECTION_ENABLED="true"
+
+# Reduce threads when WAF detected
+WAF_REDUCE_THREADS="true"
+WAF_THREAD_REDUCTION="4"
+
+# Disable port scanning when WAF detected
+WAF_DISABLE_PORTSCAN="true"
+
+# ==============================================================================
+# API KEYS (for enhanced subdomain enumeration)
+# ==============================================================================
+
+# Shodan API Key
+SHODAN_API_KEY=""
+
+# SecurityTrails API Key
+SECURITYTRAILS_API_KEY=""
+
+# Chaos ProjectDiscovery API Key
+CHAOS_API_KEY=""
+
+# VirusTotal API Key
+VIRUSTOTAL_API_KEY=""
+
+# Censys API ID and Secret
+CENSYS_API_ID=""
+CENSYS_API_SECRET=""
+
+# GitHub Personal Access Token (for dorking)
+GITHUB_TOKEN=""
+
+# ==============================================================================
+# NOTIFICATION WEBHOOKS
+# ==============================================================================
+
+# Discord webhook URL
+DISCORD_WEBHOOK_URL=""
+
+# Slack webhook URL
+SLACK_WEBHOOK_URL=""
+
+# Telegram bot settings
+TELEGRAM_BOT_TOKEN=""
+TELEGRAM_CHAT_ID=""
+
+# Notification settings
+NOTIFY_ON_CRITICAL="true"
+NOTIFY_ON_HIGH="true"
+NOTIFY_ON_MEDIUM="false"
+NOTIFY_ON_SCAN_COMPLETE="true"
+NOTIFY_RATE_LIMIT="5"
+
+# ==============================================================================
+# WORDLIST PATHS
+# ==============================================================================
+
+# DNS wordlist for subdomain brute-forcing
+DNS_WORDLIST="/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt"
+
+# Web content wordlist for directory fuzzing
+WEB_WORDLIST="/usr/share/wordlists/seclists/Discovery/Web-Content/raft-medium-directories.txt"
+
+# Parameter fuzzing wordlist
+PARAMS_WORDLIST="/usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt"
+
+# ==============================================================================
+# TOOL-SPECIFIC SETTINGS
+# ==============================================================================
+
+# Subfinder settings
+SUBFINDER_THREADS="10"
+SUBFINDER_TIMEOUT="30"
+SUBFINDER_ALL_SOURCES="true"
+
+# httpx settings
+HTTPX_THREADS="50"
+HTTPX_TIMEOUT="10"
+HTTPX_RETRIES="2"
+
+# Nuclei settings
+NUCLEI_THREADS="25"
+NUCLEI_RATE_LIMIT="150"
+NUCLEI_BULK_SIZE="25"
+NUCLEI_SEVERITY="low,medium,high,critical"
+NUCLEI_EXCLUDE_TAGS="dos,fuzz"
+NUCLEI_TEMPLATES_UPDATE="true"
+
+# Katana settings
+KATANA_THREADS="10"
+KATANA_DEPTH="2"
+KATANA_JS_CRAWL="true"
+
+# GAU settings
+GAU_THREADS="5"
+GAU_FETCH_SUBS="true"
+GAU_PROVIDERS="wayback,commoncrawl,otx,urlscan"
+
+# Dalfox settings
+DALFOX_THREADS="10"
+DALFOX_TIMEOUT="10"
+DALFOX_WAF_EVASION="true"
+
+# ==============================================================================
+# NEW v1.1 SETTINGS
+# ==============================================================================
+
+# Secrets Extraction
+SECRETS_SCAN_ENABLED="true"
+
+# Subdomain Takeover
+TAKEOVER_ENABLED="true"
+
+# Port Scanning
+PORTSCAN_ENABLED="true"
+PORTSCAN_THREADS="25"
+PORTSCAN_RATE="1000"
+PORTSCAN_FULL="false"
+PORTSCAN_PORTS=""  # Leave empty for default top 100
+
+# Directory Fuzzing
+FUZZING_ENABLED="true"
+FUZZING_THREADS="50"
+FUZZING_MAX_TARGETS="20"
+FUZZING_WORDLIST=""  # Leave empty for default
+
+# Screenshots
+SCREENSHOTS_ENABLED="true"
+SCREENSHOTS_THREADS="10"
+
+# Additional vulnerability checks
+SSRF_CHECK_ENABLED="true"
+OPEN_REDIRECT_CHECK_ENABLED="true"
+CORS_CHECK_ENABLED="true"
+CRLF_CHECK_ENABLED="true"
+HEADER_CHECK_ENABLED="true"
+
+# ==============================================================================
+# End of Configuration
+# ==============================================================================

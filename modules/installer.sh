@@ -27,6 +27,13 @@ declare -A GO_TOOLS=(
     ["anew"]="github.com/tomnomnom/anew@latest"
     ["unfurl"]="github.com/tomnomnom/unfurl@latest"
     ["qsreplace"]="github.com/tomnomnom/qsreplace@latest"
+    # New v1.1 tools
+    ["naabu"]="github.com/projectdiscovery/naabu/v2/cmd/naabu@latest"
+    ["ffuf"]="github.com/ffuf/ffuf/v2@latest"
+    ["gowitness"]="github.com/sensepost/gowitness@latest"
+    ["subjack"]="github.com/haccer/subjack@latest"
+    ["amass"]="github.com/owasp-amass/amass/v4/...@master"
+    ["assetfinder"]="github.com/tomnomnom/assetfinder@latest"
 )
 
 # List of required system packages

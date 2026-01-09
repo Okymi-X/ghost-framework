@@ -20,7 +20,7 @@
 set -o pipefail
 
 # Framework constants
-readonly GHOST_VERSION="1.0.0"
+readonly GHOST_VERSION="1.1.0"
 readonly GHOST_CODENAME="Phantom"
 
 # Determine script directory (handles symlinks)
@@ -96,6 +96,27 @@ load_modules() {
     
     if [ -f "$modules_dir/vulnerability.sh" ]; then
         source "$modules_dir/vulnerability.sh"
+    fi
+    
+    # New v1.1 modules
+    if [ -f "$modules_dir/secrets.sh" ]; then
+        source "$modules_dir/secrets.sh"
+    fi
+    
+    if [ -f "$modules_dir/takeover.sh" ]; then
+        source "$modules_dir/takeover.sh"
+    fi
+    
+    if [ -f "$modules_dir/portscan.sh" ]; then
+        source "$modules_dir/portscan.sh"
+    fi
+    
+    if [ -f "$modules_dir/fuzzing.sh" ]; then
+        source "$modules_dir/fuzzing.sh"
+    fi
+    
+    if [ -f "$modules_dir/screenshots.sh" ]; then
+        source "$modules_dir/screenshots.sh"
     fi
     
     log_debug "All modules loaded successfully"
@@ -636,7 +657,21 @@ main() {
         log_info "Skipping reconnaissance phase"
     fi
     
-    # Phase 2: Crawling
+    # Phase 2: Subdomain Takeover Check
+    if [ "$SKIP_RECON" != "true" ] && [ "${TAKEOVER_ENABLED:-true}" = "true" ]; then
+        if type run_takeover_scan &>/dev/null; then
+            run_takeover_scan "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 3: Port Scanning
+    if [ "${PORTSCAN_ENABLED:-true}" = "true" ]; then
+        if type run_port_scan &>/dev/null; then
+            run_port_scan "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 4: Crawling
     if [ "$SKIP_CRAWL" != "true" ]; then
         if [ -f "$WORKSPACE/live_hosts.txt" ]; then
             run_crawling "$WORKSPACE"
@@ -647,7 +682,28 @@ main() {
         log_info "Skipping crawling phase"
     fi
     
-    # Phase 3: Vulnerability Scanning
+    # Phase 5: Secrets Extraction
+    if [ "$SKIP_CRAWL" != "true" ] && [ "${SECRETS_SCAN_ENABLED:-true}" = "true" ]; then
+        if type run_secrets_scan &>/dev/null; then
+            run_secrets_scan "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 6: Directory Fuzzing
+    if [ "${FUZZING_ENABLED:-true}" = "true" ]; then
+        if type run_fuzzing &>/dev/null; then
+            run_fuzzing "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 7: Screenshot Capture
+    if [ "${SCREENSHOTS_ENABLED:-true}" = "true" ]; then
+        if type run_screenshots &>/dev/null; then
+            run_screenshots "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 8: Vulnerability Scanning
     if [ "$SKIP_VULN" != "true" ]; then
         run_vulnerability_scan "$WORKSPACE"
     else
