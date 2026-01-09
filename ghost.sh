@@ -20,8 +20,8 @@
 set -o pipefail
 
 # Framework constants
-readonly GHOST_VERSION="1.2.0"
-readonly GHOST_CODENAME="Spectre"
+readonly GHOST_VERSION="1.3.0"
+readonly GHOST_CODENAME="Shadow"
 
 # Determine script directory (handles symlinks)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -140,9 +140,34 @@ load_modules() {
         source "$modules_dir/wayback.sh"
     fi
     
-    # Proxy support utility
+    # New v1.3 modules
+    if [ -f "$modules_dir/emails.sh" ]; then
+        source "$modules_dir/emails.sh"
+    fi
+    
+    if [ -f "$modules_dir/apifuzz.sh" ]; then
+        source "$modules_dir/apifuzz.sh"
+    fi
+    
+    if [ -f "$modules_dir/templates.sh" ]; then
+        source "$modules_dir/templates.sh"
+    fi
+    
+    # Utility modules
     if [ -f "$utils_dir/proxy.sh" ]; then
         source "$utils_dir/proxy.sh"
+    fi
+    
+    if [ -f "$utils_dir/resume.sh" ]; then
+        source "$utils_dir/resume.sh"
+    fi
+    
+    if [ -f "$utils_dir/parallel.sh" ]; then
+        source "$utils_dir/parallel.sh"
+    fi
+    
+    if [ -f "$utils_dir/reporter.sh" ]; then
+        source "$utils_dir/reporter.sh"
     fi
     
     log_debug "All modules loaded successfully"
@@ -764,11 +789,32 @@ main() {
         fi
     fi
     
-    # Phase 13: Vulnerability Scanning
+    # Phase 13: Email Harvesting (v1.3)
+    if [ "${EMAIL_HARVEST_ENABLED:-true}" = "true" ]; then
+        if type run_email_harvest &>/dev/null; then
+            run_email_harvest "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 14: API Fuzzing (v1.3)
+    if [ "${API_FUZZ_ENABLED:-true}" = "true" ]; then
+        if type run_api_fuzz &>/dev/null; then
+            run_api_fuzz "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 15: Vulnerability Scanning
     if [ "$SKIP_VULN" != "true" ]; then
         run_vulnerability_scan "$WORKSPACE"
     else
         log_info "Skipping vulnerability scanning phase"
+    fi
+    
+    # Phase 16: Template Building (v1.3)
+    if [ "${TEMPLATE_BUILDER_ENABLED:-true}" = "true" ]; then
+        if type run_template_builder &>/dev/null; then
+            run_template_builder "$WORKSPACE"
+        fi
     fi
     
     # Generate final report

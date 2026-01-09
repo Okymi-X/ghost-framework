@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GHOST-FRAMEWORK Banner](https://img.shields.io/badge/GHOST--FRAMEWORK-v1.2.0-cyan?style=for-the-badge&logo=ghost)
+![GHOST-FRAMEWORK Banner](https://img.shields.io/badge/GHOST--FRAMEWORK-v1.3.0-cyan?style=for-the-badge&logo=ghost)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Bash](https://img.shields.io/badge/Bash-4.0%2B-green.svg?style=flat-square&logo=gnu-bash)](https://www.gnu.org/software/bash/)
@@ -65,7 +65,12 @@ GHOST-FRAMEWORK is an **open-source bug bounty automation framework** designed f
 | **🆕 Wordlist Gen** | Custom target-specific wordlists |
 | **🆕 Wayback Diff** | Find hidden/deleted endpoints |
 | **🆕 Proxy Support** | Burp Suite & OWASP ZAP integration |
-| **Report Generation** | Markdown + HTML reports with findings summary |
+| **🆕 Email Harvest** | Extract emails from targets |
+| **🆕 API Fuzzing** | REST/GraphQL with IDOR, mass assignment |
+| **🆕 Resume Scans** | Save & resume interrupted scans |
+| **🆕 Template Builder** | Generate custom Nuclei templates |
+| **🆕 Parallel Jobs** | Multi-threaded job execution |
+| **Report Generation** | Markdown + HTML + JSON + CSV reports |
 | **Notifications** | Discord, Slack, Telegram webhooks |
 
 ---
@@ -336,8 +341,8 @@ git push origin feature/my-awesome-feature
 
 - [x] **v1.1** - ✅ Subdomain takeover, secrets, ports, fuzzing, screenshots
 - [x] **v1.2** - ✅ Cloud buckets, GitHub dorking, tech detection, wordlists, Wayback
-- [x] **v1.2** - ✅ Proxy support (Burp Suite & OWASP ZAP)
-- [ ] **v1.3** - Custom Nuclei template builder
+- [x] **v1.3** - ✅ Email harvest, API fuzzing, resume scans, template builder
+- [x] **v1.3** - ✅ Parallel execution, advanced reporting (JSON/CSV/HTML)
 - [ ] **v1.4** - Scheduled scans & diff reports
 - [ ] **v2.0** - Web UI dashboard
 
