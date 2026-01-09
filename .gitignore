@@ -1,0 +1,125 @@
+# ==============================================================================
+# GHOST-FRAMEWORK .gitignore
+# ==============================================================================
+# This file specifies intentionally untracked files to ignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Results and Output
+# ------------------------------------------------------------------------------
+results/
+output/
+*.log
+*.tmp
+*.bak
+
+# ------------------------------------------------------------------------------
+# Configuration with Secrets
+# DO NOT COMMIT ghost.conf with actual API keys!
+# ------------------------------------------------------------------------------
+config/ghost.conf
+*.conf.local
+*.conf.secret
+.env
+.env.local
+
+# ------------------------------------------------------------------------------
+# Operating System Files
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+
+# ------------------------------------------------------------------------------
+# IDE and Editor Files
+# ------------------------------------------------------------------------------
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ------------------------------------------------------------------------------
+# Go Artifacts (if building custom tools)
+# ------------------------------------------------------------------------------
+/go/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# ------------------------------------------------------------------------------
+# Python Artifacts
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# ------------------------------------------------------------------------------
+# Temporary Files
+# ------------------------------------------------------------------------------
+tmp/
+temp/
+*.tmp
+*.temp
+*.cache
+
+# ------------------------------------------------------------------------------
+# Project Specific
+# ------------------------------------------------------------------------------
+# Custom modules in development
+custom_modules/*.dev.sh
+
+# Test targets file (may contain sensitive domains)
+test_targets.txt
+
+# API keys storage
+api_keys.txt
+secrets.txt
+
+# Nuclei custom templates in development
+nuclei-templates-custom/
+
+# GF patterns backup
+.gf.backup/
+
+# ------------------------------------------------------------------------------
+# Package Manager
+# ------------------------------------------------------------------------------
+node_modules/
+vendor/
