@@ -20,8 +20,8 @@
 set -o pipefail
 
 # Framework constants
-readonly GHOST_VERSION="1.1.0"
-readonly GHOST_CODENAME="Phantom"
+readonly GHOST_VERSION="1.2.0"
+readonly GHOST_CODENAME="Spectre"
 
 # Determine script directory (handles symlinks)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -117,6 +117,32 @@ load_modules() {
     
     if [ -f "$modules_dir/screenshots.sh" ]; then
         source "$modules_dir/screenshots.sh"
+    fi
+    
+    # New v1.2 modules
+    if [ -f "$modules_dir/cloud.sh" ]; then
+        source "$modules_dir/cloud.sh"
+    fi
+    
+    if [ -f "$modules_dir/github.sh" ]; then
+        source "$modules_dir/github.sh"
+    fi
+    
+    if [ -f "$modules_dir/techdetect.sh" ]; then
+        source "$modules_dir/techdetect.sh"
+    fi
+    
+    if [ -f "$modules_dir/wordlist.sh" ]; then
+        source "$modules_dir/wordlist.sh"
+    fi
+    
+    if [ -f "$modules_dir/wayback.sh" ]; then
+        source "$modules_dir/wayback.sh"
+    fi
+    
+    # Proxy support utility
+    if [ -f "$utils_dir/proxy.sh" ]; then
+        source "$utils_dir/proxy.sh"
     fi
     
     log_debug "All modules loaded successfully"
@@ -703,7 +729,42 @@ main() {
         fi
     fi
     
-    # Phase 8: Vulnerability Scanning
+    # Phase 8: Cloud Bucket Scanning (v1.2)
+    if [ "${CLOUD_SCAN_ENABLED:-true}" = "true" ]; then
+        if type run_cloud_scan &>/dev/null; then
+            run_cloud_scan "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 9: GitHub Dorking (v1.2)
+    if [ "${GITHUB_DORK_ENABLED:-true}" = "true" ]; then
+        if type run_github_scan &>/dev/null; then
+            run_github_scan "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 10: Technology Detection (v1.2)
+    if [ "${TECH_DETECTION_ENABLED:-true}" = "true" ]; then
+        if type run_tech_detection &>/dev/null; then
+            run_tech_detection "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 11: Custom Wordlist Generation (v1.2)
+    if [ "${WORDLIST_GENERATOR_ENABLED:-true}" = "true" ]; then
+        if type run_wordlist_generator &>/dev/null; then
+            run_wordlist_generator "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 12: Wayback Machine Analysis (v1.2)
+    if [ "${WAYBACK_ENABLED:-true}" = "true" ]; then
+        if type run_wayback_scan &>/dev/null; then
+            run_wayback_scan "$WORKSPACE"
+        fi
+    fi
+    
+    # Phase 13: Vulnerability Scanning
     if [ "$SKIP_VULN" != "true" ]; then
         run_vulnerability_scan "$WORKSPACE"
     else

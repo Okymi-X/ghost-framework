@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GHOST-FRAMEWORK Banner](https://img.shields.io/badge/GHOST--FRAMEWORK-v1.1.0-cyan?style=for-the-badge&logo=ghost)
+![GHOST-FRAMEWORK Banner](https://img.shields.io/badge/GHOST--FRAMEWORK-v1.2.0-cyan?style=for-the-badge&logo=ghost)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Bash](https://img.shields.io/badge/Bash-4.0%2B-green.svg?style=flat-square&logo=gnu-bash)](https://www.gnu.org/software/bash/)
@@ -59,6 +59,12 @@ GHOST-FRAMEWORK is an **open-source bug bounty automation framework** designed f
 | **🆕 CORS Check** | CORS misconfiguration detection |
 | **🆕 Open Redirect** | Open redirect vulnerability detection |
 | **🆕 CRLF Injection** | Header injection detection |
+| **🆕 Cloud Buckets** | S3/Azure/GCP exposed bucket detection |
+| **🆕 GitHub Dorking** | Search GitHub for leaked secrets |
+| **🆕 Tech Detection** | CMS, framework, and WAF fingerprinting |
+| **🆕 Wordlist Gen** | Custom target-specific wordlists |
+| **🆕 Wayback Diff** | Find hidden/deleted endpoints |
+| **🆕 Proxy Support** | Burp Suite & OWASP ZAP integration |
 | **Report Generation** | Markdown + HTML reports with findings summary |
 | **Notifications** | Discord, Slack, Telegram webhooks |
 
@@ -186,11 +192,17 @@ ghost-framework/
 │   ├── secrets.sh        # 🔐 JavaScript secrets extraction
 │   ├── fuzzing.sh        # 🔍 Directory fuzzing with ffuf
 │   ├── screenshots.sh    # 📸 Visual reconnaissance
+│   ├── cloud.sh          # ☁️ Cloud bucket scanner
+│   ├── github.sh         # 🐙 GitHub dorking
+│   ├── techdetect.sh     # 🔬 Technology fingerprinting
+│   ├── wordlist.sh       # 📝 Custom wordlist generator
+│   ├── wayback.sh        # ⏳ Wayback Machine analysis
 │   └── vulnerability.sh  # 🎯 Vulnerability scanning (10+ checks)
 ├── utils/
 │   ├── banner.sh         # 🎨 ASCII art and colors
 │   ├── logger.sh         # 📝 Logging functions
-│   └── notifications.sh  # 🔔 Webhook integrations
+│   ├── notifications.sh  # 🔔 Webhook integrations
+│   └── proxy.sh          # 🔌 Burp/ZAP proxy support
 ├── results/              # 📊 Scan results (auto-created)
 ├── README.md
 ├── CONTRIBUTING.md
@@ -322,14 +334,11 @@ git push origin feature/my-awesome-feature
 
 ## 🗺️ Roadmap
 
-- [x] **v1.1** - ✅ Subdomain takeover detection
-- [x] **v1.1** - ✅ JavaScript secrets extraction
-- [x] **v1.1** - ✅ Port scanning with naabu
-- [x] **v1.1** - ✅ Directory fuzzing with ffuf
-- [x] **v1.1** - ✅ Screenshot capture
-- [x] **v1.1** - ✅ SSRF, CORS, Open Redirect, CRLF detection
-- [ ] **v1.2** - Burp Suite integration
+- [x] **v1.1** - ✅ Subdomain takeover, secrets, ports, fuzzing, screenshots
+- [x] **v1.2** - ✅ Cloud buckets, GitHub dorking, tech detection, wordlists, Wayback
+- [x] **v1.2** - ✅ Proxy support (Burp Suite & OWASP ZAP)
 - [ ] **v1.3** - Custom Nuclei template builder
+- [ ] **v1.4** - Scheduled scans & diff reports
 - [ ] **v2.0** - Web UI dashboard
 
 ---
@@ -362,6 +371,5 @@ If you find GHOST-FRAMEWORK useful, please consider:
 
 [Report Bug](https://github.com/Okymi-X/ghost-framework/issues) •
 [Request Feature](https://github.com/Okymi-X/ghost-framework/issues) •
-[Join Discord](https://discord.gg/yourinvite)
 
 </div>
