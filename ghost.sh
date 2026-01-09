@@ -153,6 +153,10 @@ load_modules() {
         source "$modules_dir/templates.sh"
     fi
     
+    if [ -f "$modules_dir/diff.sh" ]; then
+        source "$modules_dir/diff.sh"
+    fi
+    
     # Utility modules
     if [ -f "$utils_dir/proxy.sh" ]; then
         source "$utils_dir/proxy.sh"
@@ -168,6 +172,14 @@ load_modules() {
     
     if [ -f "$utils_dir/reporter.sh" ]; then
         source "$utils_dir/reporter.sh"
+    fi
+    
+    if [ -f "$utils_dir/ratelimit.sh" ]; then
+        source "$utils_dir/ratelimit.sh"
+    fi
+    
+    if [ -f "$utils_dir/scheduler.sh" ]; then
+        source "$utils_dir/scheduler.sh"
     fi
     
     log_debug "All modules loaded successfully"

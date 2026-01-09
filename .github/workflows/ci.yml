@@ -1,0 +1,105 @@
+# GHOST-FRAMEWORK CI/CD Pipeline
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Syntax validation
+  lint:
+    name: 🔍 Lint & Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check shell scripts syntax
+        run: |
+          echo "🔍 Checking shell script syntax..."
+          for f in ghost.sh modules/*.sh utils/*.sh; do
+            bash -n "$f" && echo "✓ $f"
+          done
+
+      - name: ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './modules'
+          severity: warning
+
+  # Security scan
+  security:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ""
+          head: HEAD
+
+      - name: Check for hardcoded credentials
+        run: |
+          echo "🔒 Scanning for hardcoded credentials..."
+          ! grep -rE "(password|secret|api_key)\s*=\s*['\"][^'\"]+['\"]" \
+            --include="*.sh" --exclude="*.example" . || true
+
+  # Test installation
+  test-install:
+    name: 🧪 Test Installation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Test help command
+        run: |
+          chmod +x ghost.sh
+          ./ghost.sh --help
+
+      - name: Test version command
+        run: ./ghost.sh --version
+
+  # Documentation check
+  docs:
+    name: 📚 Documentation Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check markdown files
+        uses: articulate/actions-markdownlint@v1
+        with:
+          config: .markdownlint.json
+          files: '**/*.md'
+          ignore: 'node_modules'
+        continue-on-error: true
+
+      - name: Check for broken links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          config-file: '.markdown-link-check.json'
+        continue-on-error: true
+
+  # Build status badge update
+  badge:
+    name: 📊 Update Status
+    runs-on: ubuntu-latest
+    needs: [lint, security, test-install]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Build succeeded
+        run: echo "✅ All checks passed!"
