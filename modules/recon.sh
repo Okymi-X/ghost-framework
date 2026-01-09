@@ -29,8 +29,8 @@ declare -A WAF_PATTERNS=(
     ["stackpath"]="stackpath.net hwcdn.net"
 )
 
-# Known WAF HTTP headers
-readonly WAF_HEADERS="cf-ray server:cloudflare x-sucuri-id x-cdn akamai-origin-hop x-akamai-transformed"
+# Known WAF HTTP headers (exported for external use)
+export WAF_HEADERS="cf-ray server:cloudflare x-sucuri-id x-cdn akamai-origin-hop x-akamai-transformed"
 
 # ------------------------------------------------------------------------------
 # detect_waf_cname()
@@ -198,7 +198,7 @@ apply_waf_adaptations() {
     
     # Disable port scanning if enabled
     if [ "${WAF_DISABLE_PORTSCAN:-true}" = "true" ]; then
-        PORTSCAN_ENABLED="false"
+        export PORTSCAN_ENABLED="false"
         log_info "Port scanning: DISABLED"
     fi
     

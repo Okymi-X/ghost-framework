@@ -183,7 +183,7 @@ run_diff_scan() {
     generate_diff_report "$previous" "$workspace" "$diff_dir/diff_report.txt"
     
     # Extract key metrics
-    local new_subs=0 new_hosts=0 new_urls=0
+    local new_subs=0 new_hosts=0
     
     if [ -f "$previous/subdomains.txt" ] && [ -f "$workspace/subdomains.txt" ]; then
         new_subs=$(comm -13 <(sort "$previous/subdomains.txt") <(sort "$workspace/subdomains.txt") | wc -l | tr -d ' ')

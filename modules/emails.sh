@@ -11,17 +11,8 @@
 # Email regex pattern
 readonly EMAIL_REGEX='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}'
 
-# Common email patterns
-declare -a EMAIL_PATTERNS=(
-    "{first}.{last}"
-    "{first}{last}"
-    "{f}{last}"
-    "{first}.{l}"
-    "{first}_{last}"
-    "{last}.{first}"
-    "{last}{first}"
-    "{first}"
-)
+# Common email patterns (exported for external use)
+export EMAIL_PATTERNS="first.last first_last flast firstl"
 
 # ------------------------------------------------------------------------------
 # extract_emails_from_page()
@@ -120,8 +111,8 @@ search_google_dorks() {
     )
     
     for dork in "${dorks[@]}"; do
-        local encoded
-        encoded=$(echo "$dork" | sed 's/ /+/g')
+        # URL encode the dork (unused but prepared for future use)
+        : "$(echo "$dork" | sed 's/ /+/g')"
         
         # Note: This is rate-limited, respect Google's ToS
         sleep 5
@@ -208,10 +199,13 @@ analyze_email_patterns() {
     
     log_info "Analyzing email patterns..."
     
-    # Count patterns
-    local first_last=$(grep -c "^[a-z]*\.[a-z]*@${domain}$" "$emails_file" 2>/dev/null || echo 0)
-    local first_initial=$(grep -c "^[a-z]\.[a-z]*@${domain}$" "$emails_file" 2>/dev/null || echo 0)
-    local initial_last=$(grep -c "^[a-z][a-z]*@${domain}$" "$emails_file" 2>/dev/null || echo 0)
+    # Count patterns - declare and assign separately for SC2155
+    local first_last
+    first_last=$(grep -c "^[a-z]*\.[a-z]*@${domain}$" "$emails_file" 2>/dev/null || echo 0)
+    local first_initial
+    first_initial=$(grep -c "^[a-z]\.[a-z]*@${domain}$" "$emails_file" 2>/dev/null || echo 0)
+    local initial_last
+    initial_last=$(grep -c "^[a-z][a-z]*@${domain}$" "$emails_file" 2>/dev/null || echo 0)
     
     if [ "$first_last" -gt "$first_initial" ] && [ "$first_last" -gt "$initial_last" ]; then
         echo "first.last"

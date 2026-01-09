@@ -17,8 +17,8 @@ declare -A BUCKET_PATTERNS=(
     ["alibaba"]="[a-z0-9.-]+.oss-[a-z0-9-]+.aliyuncs.com"
 )
 
-# Bucket permission test payloads
-readonly S3_TEST_PATHS=("" "?acl" "?policy" "?cors" "?lifecycle" "?location")
+# Bucket permission test payloads (exported for external use)
+export S3_TEST_PATHS="?acl ?policy ?cors ?lifecycle ?location"
 
 # ------------------------------------------------------------------------------
 # extract_buckets_from_urls()

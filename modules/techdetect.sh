@@ -76,18 +76,8 @@ declare -A TECH_BODY=(
     ["cdn."]="CDN"
 )
 
-# JavaScript framework detection patterns
-declare -A JS_FRAMEWORKS=(
-    ["React.createElement"]="React"
-    ["ReactDOM"]="React"
-    ["angular.module"]="AngularJS"
-    ["@angular/core"]="Angular"
-    ["Vue.component"]="Vue.js"
-    ["createApp"]="Vue 3"
-    ["Ember.Application"]="Ember.js"
-    ["Backbone.Model"]="Backbone.js"
-    ["Svelte"]="Svelte"
-)
+# JavaScript framework detection patterns (exported for external use)
+export JS_FRAMEWORKS="React Angular Vue Ember Backbone Svelte"
 
 # ------------------------------------------------------------------------------
 # detect_technologies_from_headers()
@@ -96,12 +86,12 @@ declare -A JS_FRAMEWORKS=(
 # ------------------------------------------------------------------------------
 detect_from_headers() {
     local headers="$1"
-    local -n result=$2
+    local output_var="$2"
     
     for pattern in "${!TECH_HEADERS[@]}"; do
         if echo "$headers" | grep -qi "$pattern"; then
             local tech="${TECH_HEADERS[$pattern]}"
-            result["$tech"]=1
+            eval "${output_var}[\"$tech\"]=1"
         fi
     done
 }
@@ -113,12 +103,12 @@ detect_from_headers() {
 # ------------------------------------------------------------------------------
 detect_from_body() {
     local body="$1"
-    local -n result=$2
+    local output_var="$2"
     
     for pattern in "${!TECH_BODY[@]}"; do
         if echo "$body" | grep -qi "$pattern"; then
             local tech="${TECH_BODY[$pattern]}"
-            result["$tech"]=1
+            eval "${output_var}[\"$tech\"]=1"
         fi
     done
 }

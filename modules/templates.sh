@@ -29,7 +29,8 @@ generate_header_template() {
     local header_name="$1"
     local value_pattern="$2"
     local severity="${3:-info}"
-    local template_id="header-$(echo "$header_name" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9' '-')"
+    local template_id
+    template_id="header-$(echo "$header_name" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9' '-')"
     
     local template_file="$TEMPLATES_DIR/${template_id}.yaml"
     
@@ -67,7 +68,8 @@ generate_path_template() {
     local path="$1"
     local content_pattern="$2"
     local severity="${3:-info}"
-    local template_id="path-$(echo "$path" | tr -c 'a-z0-9' '-' | tr '[:upper:]' '[:lower:]')"
+    local template_id
+    template_id="path-$(echo "$path" | tr -c 'a-z0-9' '-' | tr '[:upper:]' '[:lower:]')"
     
     local template_file="$TEMPLATES_DIR/${template_id}.yaml"
     
@@ -108,7 +110,8 @@ EOF
 generate_error_template() {
     local error_pattern="$1"
     local technology="$2"
-    local template_id="error-$(echo "$technology" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9' '-')"
+    local template_id
+    template_id="error-$(echo "$technology" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9' '-')"
     
     local template_file="$TEMPLATES_DIR/${template_id}.yaml"
     
@@ -147,7 +150,8 @@ EOF
 generate_secret_template() {
     local pattern_name="$1"
     local regex_pattern="$2"
-    local template_id="secret-$(echo "$pattern_name" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9' '-')"
+    local template_id
+    template_id="secret-$(echo "$pattern_name" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9' '-')"
     
     local template_file="$TEMPLATES_DIR/${template_id}.yaml"
     
@@ -186,7 +190,8 @@ generate_cve_template() {
     local software="$2"
     local check_path="$3"
     local check_pattern="$4"
-    local template_id="$(echo "$cve_id" | tr '[:upper:]' '[:lower:]')"
+    local template_id
+    template_id="$(echo "$cve_id" | tr '[:upper:]' '[:lower:]')"
     
     local template_file="$TEMPLATES_DIR/${template_id}.yaml"
     

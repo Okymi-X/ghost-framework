@@ -81,16 +81,17 @@ github_search() {
     local encoded_query
     encoded_query=$(echo "$full_query" | sed 's/ /+/g; s/:/%3A/g')
     
-    local headers=""
-    if [ -n "${GITHUB_TOKEN:-}" ]; then
-        headers="-H \"Authorization: token $GITHUB_TOKEN\""
-    fi
-    
     local response
-    response=$(curl -s --max-time 30 \
-        -H "Accept: application/vnd.github.v3+json" \
-        ${headers:+$headers} \
-        "${GITHUB_API}/search/code?q=${encoded_query}&per_page=100" 2>/dev/null)
+    if [ -n "${GITHUB_TOKEN:-}" ]; then
+        response=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            "${GITHUB_API}/search/code?q=${encoded_query}&per_page=100" 2>/dev/null)
+    else
+        response=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            "${GITHUB_API}/search/code?q=${encoded_query}&per_page=100" 2>/dev/null)
+    fi
     
     echo "$response"
 }
@@ -132,17 +133,18 @@ search_organization() {
     
     log_info "Searching GitHub organization: $org"
     
-    local headers=""
-    if [ -n "${GITHUB_TOKEN:-}" ]; then
-        headers="-H \"Authorization: token $GITHUB_TOKEN\""
-    fi
-    
     # Get organization repos
     local repos
-    repos=$(curl -s --max-time 30 \
-        -H "Accept: application/vnd.github.v3+json" \
-        ${headers:+$headers} \
-        "${GITHUB_API}/orgs/${org}/repos?per_page=100" 2>/dev/null)
+    if [ -n "${GITHUB_TOKEN:-}" ]; then
+        repos=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            "${GITHUB_API}/orgs/${org}/repos?per_page=100" 2>/dev/null)
+    else
+        repos=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            "${GITHUB_API}/orgs/${org}/repos?per_page=100" 2>/dev/null)
+    fi
     
     if command -v jq &>/dev/null; then
         echo "# Organization: $org" >> "$output_file"
@@ -161,17 +163,18 @@ search_user() {
     
     log_info "Searching GitHub user: $user"
     
-    local headers=""
-    if [ -n "${GITHUB_TOKEN:-}" ]; then
-        headers="-H \"Authorization: token $GITHUB_TOKEN\""
-    fi
-    
     # Get user repos
     local repos
-    repos=$(curl -s --max-time 30 \
-        -H "Accept: application/vnd.github.v3+json" \
-        ${headers:+$headers} \
-        "${GITHUB_API}/users/${user}/repos?per_page=100" 2>/dev/null)
+    if [ -n "${GITHUB_TOKEN:-}" ]; then
+        repos=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            "${GITHUB_API}/users/${user}/repos?per_page=100" 2>/dev/null)
+    else
+        repos=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            "${GITHUB_API}/users/${user}/repos?per_page=100" 2>/dev/null)
+    fi
     
     if command -v jq &>/dev/null; then
         echo "# User: $user" >> "$output_file"
@@ -233,16 +236,17 @@ search_gists() {
     
     log_info "Searching GitHub Gists..."
     
-    local headers=""
-    if [ -n "${GITHUB_TOKEN:-}" ]; then
-        headers="-H \"Authorization: token $GITHUB_TOKEN\""
-    fi
-    
     local response
-    response=$(curl -s --max-time 30 \
-        -H "Accept: application/vnd.github.v3+json" \
-        ${headers:+$headers} \
-        "${GITHUB_API}/gists/public?per_page=100" 2>/dev/null)
+    if [ -n "${GITHUB_TOKEN:-}" ]; then
+        response=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            "${GITHUB_API}/gists/public?per_page=100" 2>/dev/null)
+    else
+        response=$(curl -s --max-time 30 \
+            -H "Accept: application/vnd.github.v3+json" \
+            "${GITHUB_API}/gists/public?per_page=100" 2>/dev/null)
+    fi
     
     if command -v jq &>/dev/null; then
         echo "# Public Gists with keyword matches" >> "$output_file"

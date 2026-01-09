@@ -56,11 +56,11 @@ declare -a API_PATHS=(
     "api/public"
 )
 
-# HTTP methods to test
-readonly API_METHODS=("GET" "POST" "PUT" "DELETE" "PATCH" "OPTIONS")
+# HTTP methods to test (exported for external use)
+export API_METHODS="GET POST PUT DELETE PATCH OPTIONS"
 
-# Dangerous parameters for IDOR testing
-readonly IDOR_PARAMS=("id" "user_id" "userId" "uid" "account" "account_id" "file" "doc" "page" "folder" "order" "invoice")
+# Dangerous parameters for IDOR testing (exported for external use)
+export IDOR_PARAMS="id user_id userId uid account account_id file doc page folder order invoice"
 
 # ------------------------------------------------------------------------------
 # detect_api_endpoints()
@@ -199,11 +199,12 @@ test_idor() {
         local prev=$((id - 1))
         local next=$((id + 1))
         
-        local test_url_prev=$(echo "$url" | sed "s/$id/$prev/")
-        local test_url_next=$(echo "$url" | sed "s/$id/$next/")
+        local test_url_prev
+        test_url_prev=$(echo "$url" | sed "s/$id/$prev/")
+        local test_url_next
+        test_url_next=$(echo "$url" | sed "s/$id/$next/")
         
-        local resp_orig resp_prev resp_next
-        resp_orig=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$url" 2>/dev/null)
+        local resp_prev resp_next
         resp_prev=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$test_url_prev" 2>/dev/null)
         resp_next=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$test_url_next" 2>/dev/null)
         

@@ -105,8 +105,8 @@ declare -a TAKEOVER_FINGERPRINTS=(
     "proxy.webflow.com|The page you are looking for doesn't exist|Webflow"
 )
 
-# NXDOMAIN response patterns
-readonly NXDOMAIN_PATTERNS="NXDOMAIN|SERVFAIL|refused|no servers"
+# NXDOMAIN response patterns (exported for external use)
+export NXDOMAIN_PATTERNS="NXDOMAIN|SERVFAIL|refused|no servers"
 
 # ------------------------------------------------------------------------------
 # check_dns_status()
